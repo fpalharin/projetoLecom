@@ -1,0 +1,96 @@
+-------------------------------------CREATE TABLE---------------------------------------------------------
+
+create table cliente(id_cliente number(10), nome_cliente nvarchar2(50) not null, rg_cliente char(9) not null, email_cliente nvarchar2(30) not null, 
+cpf_cliente char(11) not null, cod_cliente number(8) not null, constraint pk_id_cliente primary key(id_cliente),constraint unq_cpf_cliente unique(cpf_cliente),
+constraint unq_cod_cliente unique(cod_cliente));
+
+create table servico_empresa(id_servico_empresa number(10), nome_servico nvarchar2(50) not null, cod_servico number(8) not null, descricao_servico clob not null,
+constraint pk_id_servico_empresa primary key(id_servico_empresa), constraint unq_cod_servico unique(cod_servico));
+
+create table cliente_servico(id_cliente number(10) not null, id_servico_empresa number(10) not null, 
+data_incio date default sysdate not null, data_fim date default sysdate not null, 
+constraint pk_cliente_servico primary key (id_cliente, id_servico_empresa),
+constraint fk_servico_cliente foreign key (id_cliente) references cliente(id_cliente), 
+constraint fk_servico_empresa_cli foreign key (id_servico_empresa) references servico_empresa(id_servico_empresa));
+
+create table telefone_cliente(id_telefone_cliente number(10), id_cliente number(10) not null, telefone_cliente char(9) not null, ddd_cliente char(2) not null,
+tipo_telefone nvarchar2 (20) not null, constraint pk_id_telefone_cliente primary key(id_telefone_cliente),
+constraint fk_tel_cliente foreign key(id_cliente) references cliente(id_cliente));
+
+create table estado(id_estado number(10), nome_estado nvarchar2(50) not null, sigla_estado char(2) not null, constraint pk_id_estado primary key(id_estado),
+constraint unq_nome_estado unique(nome_estado), constraint unq_sigla_estado unique(sigla_estado));
+
+create table cidade(id_cidade number(10), nome_cidade nvarchar2(50) not null, id_estado number(10) not null, constraint pk_id_cidade primary key(id_cidade),
+constraint fk_cidade_estado foreign key (id_estado) references estado(id_estado));
+
+create table endereco_cliente(id_endereco_cliente number(10), id_cidade number(10) not null, id_cliente number(10) not null, 
+logradouro_cliente nvarchar2(100) not null, bairro_cliente nvarchar2(100) not null, complemento_cliente nvarchar2(100), cep_cliente char(8) not null,
+constraint pk_id_endereco_cliente primary key (id_endereco_cliente), constraint fk_endereco_cidade foreign key(id_cidade) references cidade(id_cidade),
+constraint fk_endereco_cliente foreign key(id_cliente) references cliente(id_cliente));
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------Sequences---------------------------------------------------------
+create sequence sq_cliente
+start with 1
+increment by 1;
+
+create sequence sq_cliente_servico
+start with 1
+increment by 1;
+
+create sequence sq_endereco_cliente
+start with 1
+increment by 1;
+
+create sequence sq_servico_empresa
+start with 1
+increment by 1;
+
+create sequence sq_telefone_cliente
+start with 1
+increment by 1;
+
+--------------------------------------------------------------------------------------------------------------------
+-------------------------------------------Procedures---------------------------------------------------------------
+create or replace procedure pr_excluir_cliente(pid_cliente number) as
+begin
+
+  delete from cliente where id_cliente = pid_cliente;
+  delete from endereco_cliente where id_cliente = pid_cliente;
+  delete from telefone_cliente where id_cliente = pid_cliente;
+  
+end;
+
+create or replace procedure pr_alterar_cliente (pid_cliente number, pnome_cliente nvarchar2, prg_cliente char, pemail_cliente nvarchar2, pcpf_cliente char,
+pcod_cliente number, pid_cidade number, plogradouro_cliente nvarchar2, pbairro_cliente nvarchar2, pcomplemento_cliente nvarchar2,
+pcep_cliente char, ptelefone_cliente char, pddd_cliente char, ptipo_telefone nvarchar2) as
+begin
+
+  update cliente set nome_cliente = pnome_cliente, rg_cliente = prg_cliente, email_cliente = pemail_cliente, cpf_cliente = pcpf_cliente,
+  cod_cliente = pcod_cliente where id_cliente = pid_cliente;
+  
+  update endereco_cliente set id_cidade = pid_cidade, logradouro_cliente = plogradouro_cliente, bairro_cliente = pbairro_cliente,
+  complemento_cliente = pcomplemento_cliente, cep_cliente = pcep_cliente where id_cliente = pid_cliente;
+  
+  update telefone_cliente set telefone_cliente = ptelefone_cliente, ddd_cliente = pddd_cliente, tipo_telefone = ptipo_telefone 
+  where id_cliente = pid_cliente;
+
+end;
+
+create or replace package pkg_consulta_cliente as
+type cur_cliente is ref cursor;
+
+end pkg_consulta_cliente;
+
+create or replace procedure pr_consultar_cliente (pcur_cliente out pkg_consulta_cliente.cur_cliente) as
+begin
+  
+  open pcur_cliente for
+  select cli.nome_cliente, cli.cpf_cliente, cli.email_cliente, cli.cod_cliente, e.logradouro_cliente, e.bairro_cliente,
+  e.cep_cliente, c.nome_cidade, es.nome_estado, es.sigla_estado, t.telefone_cliente, t.ddd_cliente, t.tipo_telefone
+  from cliente cli inner join telefone_cliente t on cli.id_cliente = t.id_cliente 
+  inner join endereco_cliente e on cli.id_cliente = e.id_cliente 
+  inner join cidade c on e.id_cidade = c.id_cidade 
+  inner join estado es on c.id_estado = es.id_estado; 
+
+end;
