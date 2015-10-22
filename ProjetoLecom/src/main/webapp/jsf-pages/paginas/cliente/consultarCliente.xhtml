@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/adicional/templates/templatesHome.xhtml">
+	<ui:define name="tituloPagina">
+		Consultar Clientes
+	</ui:define>
+		
+	<ui:define name="conteudoCentro">
+		<p:panel>
+		<h:form id="formularioDialog">
+				
+				<p:confirmDialog global="true" widgetVar="dialogConfirmacaoCliente" id="dialogConfirmacaoCliente" showEffect="bounce"
+				hideEffect="explode" message="Deseja realmente excluir?" header="Excluir Clientes" closable="true">
+					
+					<p:commandButton value="Sim" action="#{cliente.excluirCliente()}" update=":formularioConsulta" oncomplete="PF('dialogConfirmacaoCliente').hide()"></p:commandButton>
+					<p:commandButton value="Não" type="button" onclick="PF('dialogConfirmacaoCliente').hide()"></p:commandButton>
+					
+				</p:confirmDialog>	
+				
+				<p:confirmDialog global="true" widgetVar="dialogConfirmacaoEndereco" id="dialogConfirmacaoEndereco" showEffect="bounce"
+				hideEffect="explode" message="Deseja realmente excluir?" header="Excluir Enderecos" closable="true">
+					
+					<p:commandButton value="Sim" action="#{cliente.excluirEndereco()}" oncomplete="PF('dialogConfirmacaoEndereco').hide()" update=":formularioDialog:container"></p:commandButton>
+					<p:commandButton value="Não" type="button" onclick="PF('dialogConfirmacaoEndereco').hide()"></p:commandButton>
+					
+				</p:confirmDialog>
+				
+				<p:confirmDialog global="true" widgetVar="dialogConfirmacaoTelefone" id="dialogConfirmacaoTelefone" showEffect="bounce"
+				hideEffect="explode" message="Deseja realmente excluir?" header="Excluir Telefones" closable="true">
+					
+					<p:commandButton value="Sim" action="#{cliente.excluirTelefone()}" oncomplete="PF('dialogConfirmacaoTelefone').hide()" update=":formularioDialog:container"></p:commandButton>
+					<p:commandButton value="Não" type="button" onclick="PF('dialogConfirmacaoTelefone').hide()"></p:commandButton>
+					
+				</p:confirmDialog>
+				
+				<p:dialog closable="true" resizable="false" modal="true" widgetVar="dialogDetalhe"
+				visible="false" header="Detalhe da Cliente" id="dialog">
+					
+					<h:panelGrid id="container">
+					
+					<div>
+						<h:outputLabel value="Nome do Cliente: " />
+						<h:outputText value="#{cliente.clienteSelecionadoCon.nomeCliente}" />
+					</div>
+					
+					<div>
+						<h:outputText value="Rg do Cliente:" />
+						<h:outputText value="#{cliente.clienteSelecionadoCon.rgCliente}" />
+					</div>
+
+					<div>
+						<h:outputText value="e-Mail do Cliente:" />
+						<h:outputText value="#{cliente.clienteSelecionadoCon.emailCliente}" />
+					</div>
+					
+					<div>
+						<h:outputText value="Cpf do Cliente:" />
+						<h:outputText value="#{cliente.clienteSelecionadoCon.cpfCliente}" />
+					</div>
+					
+					<div>
+						<h:outputText value="Codigo do Cliente:" />
+						<h:outputText value="#{cliente.clienteSelecionadoCon.codCliente}" />
+					</div>
+
+					<div>
+						<p:dataTable value="#{cliente.listaTelefonesCon}" var="telefone" paginator="true" rows="10"
+						emptyMessage="Não há Registros" id="telefoneTable">
+							<p:column headerText="DDD">
+								<h:outputFormat value="#{telefone.dddCliente}" />
+							</p:column>
+							<p:column headerText="Telefones">
+								<h:outputText value="#{telefone.telefoneCliente}" />
+							</p:column>
+							<p:column headerText="Tipo de Telefones">
+								<h:outputText value="#{telefone.tipoTelefone}" />
+							</p:column>
+							<p:column headerText="">
+								<h:link outcome="/jsf-pages/paginas/cliente/alterarTelefone" value="Alterar">
+									<f:param name="idTelefone" value="#{telefone.idTelefoneCliente}"></f:param>
+									<f:param name="action" value="Alterar_Telefone"></f:param>
+								</h:link>
+							</p:column>
+							
+							<p:column>
+								<p:commandButton action="#{cliente.receberIdTelefone(telefone)}" value="Excluir" 
+								oncomplete="PF('dialogConfirmacaoTelefone').show()"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div> 
+					
+					<div>
+						<p:dataTable value="#{clente.listaEnderecosCon}" var="endereco" paginator="true" rows="10"
+						emptyMessage="Não há Registro" id="enderecoTable">
+							<p:column headerText="Rua">
+								<h:outputText value="#{endereco.logradouroCliente}" />
+							</p:column>
+							<p:column headerText="Bairro">
+								<h:outputText value="#{endereco.bairroCliente}" />
+							</p:column>
+							<p:column headerText="CEP">
+								<h:outputText value="#{endereco.cepCliente}" />
+							</p:column>
+							<p:column headerText="Cidade">
+								<h:outputText value="#{endereco.cidade.nomeCidade}" />
+							</p:column>
+							<p:column headerText="Estado">
+								<h:outputText value="#{endereco.cidade.estado.nomeEstado}" />
+							</p:column>
+							<p:column headerText="">
+								<h:link outcome="/jsf-pages/paginas/cliente/alterarEndereco" value="Alterar">
+									<f:param name="idEndereco" value="#{endereco.idEnderecoCliente}"></f:param>
+									<f:param name="action" value="Alterar_Endereco"></f:param>
+								</h:link>
+							</p:column>
+							
+							<p:column>
+								<p:commandButton action="#{clinica.receberIdEndereco(endereco)}" 
+								value="Excluir" oncomplete="PF('dialogConfirmacaoEndereco').show()"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div>
+					
+					</h:panelGrid>
+				
+				</p:dialog>
+				
+			</h:form>
+			
+			<h:form id="formularioConsulta">
+		 
+		 		<h:outputLabel value="Nome: " for="nomeClientePequisa" />
+				<h:inputText value="#{cliente.nomeClienteCon}" id="nomeClinicaPequisa" label="Nome da Clinica"/>
+				
+				<h:commandButton value="Pesquisar" action="#{cliente.pesquisarCliente}" />
+				
+				
+				
+				<p:dataTable value="#{cliente.listaClientesCon}" var="cli" paginator="true" rows="10" selectionMode="single"
+				emptyMessage="Não há registros" selection="#{cliente.clienteSelecionadoCon}" rowKey="#{cli.idCliente}" id="clienteTable">
+				
+					<p:ajax event="rowSelect" listener="#{cliente.detalharCliente}" update=":formularioDialog"
+					oncomplete="PF('dialogDetalhe').show()"></p:ajax>
+					
+					<p:column headerText="Nome do Cliente">
+						<h:outputText value="#{cli.nomeCliente}" />
+					</p:column>	
+					
+					<p:column headerText="Codigo do Cliente">
+						<h:outputText value="#{cli.codCliente}" />
+					</p:column>
+					
+					<p:column headerText="">
+						<h:link outcome="/jsf-pages/paginas/cliente/alterarCliente" value="Alterar">
+							<f:param name="idCliente" value="#{cli.idCliente}"></f:param>
+							<f:param name="action" value="Alterar"></f:param>
+						</h:link>
+					</p:column>
+					
+					<p:column>
+						<p:commandLink action="#{cliente.receberIdCliente(cli)}" value="Excluir" 
+						oncomplete="PF('dialogConfirmacaoCliente').show()"></p:commandLink>
+					</p:column>
+				
+				</p:dataTable>
+			</h:form>
+		
+		
+		</p:panel>	
+	</ui:define>
+		
+</ui:composition>
+</html>

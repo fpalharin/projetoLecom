@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+	<title><ui:insert name="tituloPagina"><h:outputText value="Página Padrão"></h:outputText></ui:insert></title>
+	
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/0.9.0/jquery.mask.min.js"></script>
+	
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+	
+		<link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/geral.css" type="text/css"></link>
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/geral.js"></script>
+	
+		<ui:insert name="conteudoCabecalho">
+		
+		</ui:insert>
+	</h:head>
+	
+	<h:body>
+		
+		<div class="painel_lateral">
+			<div align="center" class="conteudo_lateral">
+			
+				<a href="#{facesContext.externalContext.requestContextPath}/jsf-pages/paginas/home.html" 
+				class="btn_meunu_lateral"><h:outputText value="Home"></h:outputText></a>
+			
+				<a href="#{facesContext.externalContext.requestContextPath}/jsf-pages/paginas/cliente/consultarCliente.html?action=Consultar" 
+				class="btn_meunu_lateral"><h:outputText value="Manter Clientes"></h:outputText></a> 
+				
+				<a href="#{facesContext.externalContext.requestContextPath}/jsf-pages/paginas/cliente/incluirCliente.html?action=Incluir" 
+				class="btn_meunu_lateral"><h:outputText value="Incluir Clientes"></h:outputText></a> 
+				
+				<a href="#{facesContext.externalContext.requestContextPath}/jsf-pages/paginas/cliente/incluirServico.html?action=Incluir_Servico" 
+				class="btn_meunu_lateral"><h:outputText value="Cadastrar Serviço"></h:outputText></a> 
+			   
+			</div>
+	
+		</div>
+		
+		<div class="painel_centro">
+		
+			<p:dialog header="Carregando..." resizable="false"
+			closable="flase"
+			visible="false"
+			modal="true"
+			widgetVar="dialog">
+				
+			</p:dialog>
+			
+			<p:ajaxStatus onstart="PF('dialog').show()" onsuccess="PF('dialog').hide()"></p:ajaxStatus>
+				
+			<ui:insert name="conteudoCentro">
+			</ui:insert>
+		
+		</div>
+	
+	</h:body>
+</html>

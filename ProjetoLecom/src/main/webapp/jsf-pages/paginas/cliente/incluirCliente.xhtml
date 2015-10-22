@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/adicional/templates/templatesHome.xhtml">
+
+	<ui:define name="tituloPagina">Inclusão de Clientes</ui:define>
+	
+	<ui:define name="conteudoCabecalho">
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/incluirClienteFormulario.js">
+		</script>
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/cliente.js">
+		</script>
+		
+	</ui:define>
+	
+	<ui:define name="conteudoCentro">
+	
+		<h:form name="formulario" id="formulario" enctype="multipart/form-data">
+			
+			<div>
+				<p:messages showSummary="true" showDetail="true" closable="true"></p:messages>
+			</div>
+					
+			<div class="ui-messages-error ui-corner-all campo_invisivel" id="containerErro">
+					
+					
+			</div>
+			
+			<div>
+				<h:outputLabel value="Nome do Cliente:"  for="nomeCliente"/>
+				<h:inputText value="#{cliente.nomeClienteInc}" binding="#{cliente.campoNomeClienteInc}" 
+				id="nomeCliente" label="Nome da Cliente" maxlength="50"/>
+				<span class="label_msg_erro" id="msgNome"></span>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Rg:" for="rgCliente" />
+				<h:inputText value="#{cliente.rgClienteInc}" binding="#{cliente.campoRgClienteInc}" 
+				id="rgCliente" label="Rg da Cliente" maxlength="9"/>
+				<span class="label_msg_erro" id="msgRg"></span>
+			</div>
+			
+			<div>
+				<h:outputLabel value="e-Mail:" for="emailCliente" />
+				<h:inputText value="#{cliente.emailClienteInc}" binding="#{cliente.campoEmailClienteInc}" 
+				id="emailCliente" label="Email" maxlength="30"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="CPF:" for="cpfCliente" />
+				<h:inputText value="#{cliente.cpfClienteInc}" binding="#{cliente.campoCpfClienteInc}" 
+				id="cpfCliente" label="Cpf" maxlength="11"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Codigo Do Cliente:" for="codCliente" />
+				<h:inputText value="#{cliente.codClienteInc}" binding="#{cliente.campoCodClienteInc}" 
+				id="codCliente" label="Codigo do CLiente" maxlength="8"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="DDD:" for="dddCliente"/>	
+				<h:inputText value="#{cliente.dddClienteInc}" binding="#{cliente.campoDddClienteInc}" 
+				id="dddCliente" label="DDD" maxlength="2"/>	
+				
+				<h:outputLabel value="Telefone:" for="telefoneCliente"/>
+				<h:inputText value="#{cliente.telefoneClienteInc}" binding="#{cliente.campoTelefoneClienteInc}" 
+				id="telefoneCliente" label="Telefone" maxlength="9"/>
+				
+				<h:outputLabel value="Tipo Telefone:" for="tipoTelefone"/>
+				<h:inputText value="#{cliente.tipoTelefone}" binding="#{cliente.campoTipoTelefoneInc}" 
+				id="tipoTelefone" label="Tipo Telefone" maxlength="20"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Estado:" for="comboEstado" />
+				<h:selectOneMenu value="#{cliente.codEstadoInc}" binding="#{cliente.campoEstadoInc}" id="comboEstado" label="Estados">
+					
+					<f:ajax event="change" listener="#{cliente.buscarCidadePorEstado}" render="comboCidade"></f:ajax>
+					
+					<f:selectItem itemValue="0" itemLabel="::SELECIONE::"/>
+					<f:selectItems value="#{cliente.listaEstadosInc}"/>
+				
+				</h:selectOneMenu>
+			
+			</div>
+			
+			<div>
+				<h:outputLabel value="Cidade:" for="comboCidade"/>
+				<h:selectOneMenu value="#{cliente.codCidadeInc}" binding="#{cliente.campoCidadeInc}" id="comboCidade" 
+				label="Cidades" disabled="#{empty cliente.listaCidadesInc}">
+					
+					<f:selectItem itemValue="0" itemLabel="::SELECIONE::"/>
+					<f:selectItems value="#{cliente.listaCidadesInc}"/>
+				
+				</h:selectOneMenu>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Logradouro: " for="logradouroCliente" />
+				<h:inputText value="#{cliente.logradouroClienteInc}" binding="#{cliente.campoLogradouroClienteInc}" 
+				id="logradouroCliente" label="Logradouro Cliente" maxlength="100"/>
+				<span class="msg_erro" id="msgLogradouro"></span>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Bairro:" for="bairroCliente" />
+				<h:inputText value="#{cliente.bairroClienteInc}" binding="#{cliente.campoBairroClienteInc}"  
+				id="bairroCliente" label="Bairro Cliente" maxlength="100"/>
+				<span class="msg_erro" id="msgBairro"></span>
+			</div>
+			
+			<div>
+				<h:outputLabel value="CEP:" for="cepCliente"/>
+				<h:inputText value="#{cliente.cepClienteInc}" binding="#{cliente.campoCepClienteInc}"  
+				id="cepCliente" label="Cep Cliente" maxlength="8"/>
+				<span class="msg_erro" id="msgCep"></span>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Complemento:" for="complementoCliente" />
+				<h:inputText value="#{cliente.complementoClienteInc}" binding="#{cliente.campoComplementoClienteInc}" 
+				id="complementoCliente" label="Complemento Cliente" maxlength="100"/>
+				<span class="msg_erro" id="msgComplemento"></span>
+			</div>
+			
+			<div>
+				<p:commandButton value="Enviar Formulário" action="#{cliente.salvarCliente}"  
+				onclick="return validarFormulario();" update="@form"></p:commandButton>
+				
+				<p:commandButton value="Limpar Formulário" action="#{cliente.limparFormulario}" 
+				update="@form" immediate="true" onclick="limparFormulario()"></p:commandButton>
+			
+			</div>
+		
+		
+		</h:form>
+
+	
+	</ui:define>
+		
+</ui:composition>
+</html>

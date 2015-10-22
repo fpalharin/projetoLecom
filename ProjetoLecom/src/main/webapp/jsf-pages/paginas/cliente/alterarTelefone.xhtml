@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/adicional/templates/templatesHome.xhtml">
+
+	<ui:define name="tituloPagina">
+		Alterar Telefones
+	</ui:define>
+
+	<ui:define name="conteudoCabecalho">
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/alterarTelefoneFormulario.js">
+		</script>
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/cliente.js">
+		</script>
+		
+	</ui:define>
+	
+	<ui:define name="conteudoCentro">
+	
+		<h:form id="formularioAlterarTelefone">
+		
+		<div>
+			<p:messages showSummary="true" showDetail="true" closable="true"></p:messages>
+		</div>
+		
+		<div class="ui-messages-error ui-corner-all campo_invisivel" id="containerErro">
+				
+				
+		</div>
+			
+			<div>
+				<h:outputLabel value="DDD: " for="dddCliente" />
+				<h:inputText value="#{cliente.dddClienteAlt}" id="dddCliente" maxlength="2" label="DDD"
+				 binding="#{cliente.campoDddClienteAlt}"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Telefone: " for="telefoneCliente" />
+				<h:inputText value="#{cliente.telefoneClienteAlt}" id="telefoneCliente" maxlength="9" label="Telefone" 
+				binding="#{cliente.campoTelefoneClienteAlt}"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Tipo Telefone: " for="tipoTelefone"/>
+				<h:inputText value="#{cliente.tipoTelefoneAlt}" id="tipoTelefone" maxlength="9" label="Tipo Telefone" 
+				binding="#{cliente.campoTipoTelefoneAlt}"/>
+			</div>
+			
+			<div>
+				<p:commandButton action="#{cliente.alterarTelefone()}" value="Enviar" onclick="return validarFormularioTelefoneAlt();" 
+				update="@form"></p:commandButton>
+				
+				<p:commandButton action="#{cliente.limparFormularioAlterarTelefone}"  value="Limpar"
+				 onclick="return limparFormularioTelefoneAlt();" update="@form" immediate="true"></p:commandButton>
+			</div>
+		
+		
+		</h:form>
+		
+	
+	</ui:define>
+</ui:composition>
+</html>

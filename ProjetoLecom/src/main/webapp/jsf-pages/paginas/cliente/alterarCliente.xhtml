@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/adicional/templates/templatesHome.xhtml">
+	
+	<ui:define name="tituloPagina">
+		Alterar Cliente
+	</ui:define>
+	
+	<ui:define name="conteudoCabecalho">
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/alterarClienteFormulario.js">
+		</script>
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/cliente.js">
+		</script>
+		
+	</ui:define>
+	
+	<ui:define name="conteudoCentro">
+	
+		<h:form id="formularioDialogEndereco">
+		
+			<div>
+				<p:messages showSummary="true" showDetail="true" closable="true"></p:messages>
+			</div>
+			
+			<p:dialog closable="true" resizable="false" modal="true" widgetVar="dialogEndereco" visible="false"
+				header="Alterar Enderecos" id="dialogEndereco">
+		
+				<h:panelGrid id="containerEndereco">
+					<div>
+						<h:outputLabel value="Estado: "
+							for="comboEstado" />
+						<h:selectOneMenu value="#{cliente.codEstadoAux}"
+							id="comboEstado" label="Estados">
+
+							<f:ajax event="change" listener="#{cliente.buscarCidadePorEstadoAux}" render="comboCidade"></f:ajax>
+
+							<f:selectItem itemValue="0" itemLabel="::SELECIONE::" />
+							<f:selectItems value="#{cliente.listaEstadosAux}" />
+
+						</h:selectOneMenu>
+
+						<h:outputLabel value="Cidade: "
+							for="comboCidade" />
+						<h:selectOneMenu value="#{cliente.codCidadeAux}"
+							binding="#{cliente.campoCidadeAux}" id="comboCidade"
+							label="Cidades" disabled="#{empty cliente.listaCidadesAux}">
+
+							<f:selectItem itemValue="0" itemLabel="::SELECIONE::" />
+							<f:selectItems value="#{cliente.listaCidadesAux}" />
+
+						</h:selectOneMenu>
+					
+						<h:outputLabel value="Logradouro: "
+							for="logradouroCliente" />
+						<h:inputText value="#{cliente.logradouroClienteAux}"
+							id="logradouroCliente" label="Logradouro Cliente" maxlength="100" />
+					</div>
+
+					<div>
+						<h:outputLabel value="Bairro: "
+							for="bairroCliente" />
+						<h:inputText value="#{cliente.bairroClienteAux}"  id="bairroCliente"
+							label="Bairro Cliente" maxlength="100" />
+					
+						<h:outputLabel value="CEP: "
+							for="cepCliente" />
+						<h:inputText value="#{cliente.cepClienteAux}" id="cepCliente"
+							label="Cep Cliente" maxlength="8" />
+					
+						<h:outputLabel value="Complemento: "
+							for="complementoCliente" />
+						<h:inputText value="#{cliente.complementoClienteAux}"
+							id="complementoCliente" label="Complemento Cliente"
+							maxlength="100" />
+							
+						<p:commandButton action="#{cliente.salvarEnderecoAux()}" value="Incluir" update=":formularioDialogEndereco:containerEndereco"></p:commandButton>
+					</div>
+
+					<div>
+						<p:dataTable value="#{cliente.listaDialogEndereco}" var="endereco"
+							paginator="true" rows="10" emptyMessage="Não há Registro"
+							id="enderecoTable">
+							<p:column headerText="Rua">
+								<h:outputText value="#{endereco.logradouroCliente}" />
+							</p:column>
+							<p:column headerText="Bairro">
+								<h:outputText value="#{endereco.bairroCliente}" />
+							</p:column>
+							<p:column headerText="CEP">
+								<h:outputText value="#{endereco.cepCliente}" />
+							</p:column>
+							<p:column headerText="Cidade">
+								<h:outputText value="#{endereco.cidade.nomeCidade}" />
+							</p:column>
+							<p:column headerText="Estado">
+								<h:outputText value="#{endereco.cidade.estado.nomeEstado}" />
+							</p:column>
+		
+							<p:column>
+								<p:commandButton action="#{cliente.excluirEnderecoAux(endereco)}" value="Excluir" update=":formularioDialogEndereco:containerEndereco"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div>
+					
+				</h:panelGrid>
+
+			</p:dialog>
+
+		</h:form>
+		
+		<h:form id="formularioDialogTelefone">
+			
+			<div>
+				<p:messages showSummary="true" showDetail="true" closable="true"></p:messages>
+			</div>
+		
+			<p:dialog closable="true" resizable="false" modal="true" widgetVar="dialogTelefone" visible="false"
+				header="Alterar Telefone" id="dialogTelefone">
+			
+				<h:panelGrid id="containerTelefone">
+				
+					<div>
+						<h:outputLabel value="DDD: " for="dddCliente" />
+						<h:inputText value="#{cliente.dddClienteAux}" id="dddCliente" label="DDD" maxlength="2" />
+					
+						<h:outputLabel value="Telefone: " for="telefoneCliente" />
+						<h:inputText value="#{cliente.telefoneClienteAux}" id="telefoneCliente" label="Telefone" maxlength="9" />
+					
+						<h:outputLabel value="Tipo Telefone: " for="tipoTelefone" />
+						<h:inputText value="#{cliente.tipoTelefoneAux}" id="tipoTelefone" label="Tipo Telefone" maxlength="20" />
+						
+						<p:commandButton action="#{cliente.salvarTelefoneAux()}" value="Incluir" update=":formularioDialogTelefone:containerTelefone"></p:commandButton>
+					</div>
+					
+					<div>
+					
+						<p:dataTable value="#{cliente.listaDialogTelefone}" var="telefone" paginator="true" rows="10"
+						emptyMessage="Não há Registros" id="telefoneTable">
+						
+							<p:column headerText="DDD">
+								<h:outputFormat value="#{telefone.dddCliente}" />
+							</p:column>
+							<p:column headerText="Telefones">
+								<h:outputText value="#{telefone.telefoneCliente}" />
+							</p:column>
+							<p:column headerText="Tipo de Telefones">
+								<h:outputText value="#{telefone.tipoTelefone}" />
+							</p:column>
+							
+							<p:column>
+								<p:commandButton action="#{cliente.excluirTelefoneAux(telefone)}" value="Excluir" update=":formularioDialogTelefone:containerTelefone"></p:commandButton>
+							</p:column>
+							
+						</p:dataTable>
+					</div>
+					
+				</h:panelGrid>
+				
+			</p:dialog>
+			
+		</h:form>
+		
+		<h:form id="formularioAlterar">
+			
+			<div>
+				<p:messages showSummary="true" showDetail="true" closable="true"></p:messages>
+			</div>
+			
+			<div class="ui-messages-error ui-corner-all campo_invisivel" id="containerErro">
+					
+					
+			</div>
+			
+			<div>
+				<h:outputLabel value="Nome: "  for="nomeCliente"/>
+				<h:inputText value="#{cliente.nomeClienteAlt}"  id="nomeCliente" maxlength="50" 
+				label="Nome do Cliente" binding="#{cliente.campoNomeClienteAlt}"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Rg: " for="rgCliente" />
+				<h:inputText value="#{cliente.rgClienteAlt}" id="rgCliente" maxlength="9" 
+				label="Rg do Cliente" binding="#{cliente.campoRgClienteAlt}"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="e-Mail: " for="emailCliente" />
+				<h:inputText value="#{cliente.emailClienteAlt}" id="emailCliente" maxlength="30" 
+				label="Email do Cliente" binding="#{cliente.campoEmailClienteAlt}"/>
+			</div>	
+					
+			<div>
+				<h:outputLabel value="Cpf: " for="cpfCliente" />
+				<h:inputText value="#{cliente.cpfClienteAlt}" id="cpfCliente" maxlength="11" 
+				label="Cpf do Cliente" binding="#{cliente.campoCpfClienteAlt}"/>
+			</div>
+						
+			<div>
+				<h:outputLabel value="Codigo Do Cliente: " for="codCliente" />
+				<h:inputText value="#{cliente.codClienteAlt}" id="codCliente" maxlength="8" 
+				label="Codigo do Cliente" binding="#{cliente.campoCodClienteAlt}"/>
+			</div>
+
+			<div>
+				<h:link value="Alterar Endereco" onclick="PF('dialogEndereco').show();return false"/>
+			</div>
+			
+			<div>
+				<h:link value="Alterar Telefone" onclick="PF('dialogTelefone').show();return false"/>
+			</div>
+			
+			<div>
+				<p:commandButton action="#{cliente.alterarCliente}" value="Enviar" onclick="return validarFormularioAlt();" 
+				update="@form"></p:commandButton>
+				
+				<p:commandButton action="#{cliente.limparFormularioAlterar()}" value="Limpar" onclick="return limparFormularioAlt();" update="@form"
+				immediate="true"></p:commandButton>
+			</div>	
+			
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/adicional/templates/templatesHome.xhtml">
+	
+	<ui:define name="tituloPagina">
+		Alterar Endereço
+	</ui:define>
+	
+	
+	<ui:define name="conteudoCabecalho">
+	
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/alterarEnderecoFormulario.js">
+		</script>
+		
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/cliente/cliente.js">
+		</script>
+		
+	</ui:define>
+	
+	<ui:define name="conteudoCentro">
+		<h:form id="formularioAlterarEndereco">
+		
+			<div>
+				<p:messages showSummary="true" showDetail="true" closable="true"></p:messages>
+			</div>
+			
+			<div class="ui-messages-error ui-corner-all campo_invisivel" id="containerErro">
+					
+					
+			</div>
+			
+			<div>
+				<h:outputLabel value="Logradouro da Cliente: " for="logradouroCliente" />
+				<h:inputText value="#{cliente.logradouroClienteAlt}" id="logradouroCliente" maxlength="100" 
+				label="Logradouro da Cliente" binding="#{cliente.campoLogradouroClienteAlt}"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Bairro da Cliente: "  for="bairroCliente"/>
+				<h:inputText value="#{cliente.bairroClienteAlt}" id="bairroCliente" maxlength="100" 
+				label="Bairro da Cliente" binding="#{cliente.campoBairroClienteAlt}"/>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Cep da Cliente: " for="cepCliente" />
+				<h:inputText value="#{clinica.cepClinicaAlt}" id="cepCliente"  maxlength="8" 
+				label="Cep da Cliente" binding="#{cliente.campoCepClienteAlt}"/>
+			</div> 
+			
+			<div>
+				<h:outputLabel value="Complemento da Cliente: " for="complementoCliente"/>
+				<h:inputText value="#{cliente.complementoClienteAlt}" id="complementoCliente" maxlength="100" 
+				label="Complemento da Cliente" binding="#{cliente.campoComplementoClienteAlt}"/>
+			</div>
+			
+			
+			<div>
+				<h:outputLabel value="Estados: " for="comboEstado" />
+				<h:selectOneMenu value="#{cliente.codEstadoAlt}" binding="#{cliente.campoEstadoAlt}" id="comboEstado" label="Estados">
+					
+					<f:ajax event="change" listener="#{cliente.buscarCidadePorEstadoAlt}" render="comboCidade"></f:ajax>
+					
+					<f:selectItem itemValue="0" itemLabel="::SELECIONE::"/>
+					<f:selectItems value="#{cliente.listaEstadosAlt}"/>
+				
+				</h:selectOneMenu>
+			</div>
+			
+			<div>
+				<h:outputLabel value="Cidades: " for="comboCidade"/>
+				<h:selectOneMenu value="#{cliente.codCidadeAlt}" binding="#{cliente.campoCidadeAlt}" id="comboCidade" 
+				label="Cidades" disabled="#{empty cliente.listaCidadesAlt}">
+					
+					<f:selectItem itemValue="0" itemLabel="::SELECIONE::"/>
+					<f:selectItems value="#{cliente.listaCidadesAlt}"/>
+				
+				</h:selectOneMenu>
+		  	</div>
+			
+			<div>
+				<p:commandButton action="#{cliente.alterarEndereco()}" value="Enviar" onclick="return validarFormularioEnderecoAlt();" 
+				update="@form"></p:commandButton>
+				
+				<p:commandButton action="#{cliente.limparFormularioAlterarEndereco}" value="Limpar" 
+				onclick="return limparFormularioEmailAlt();" update="@form"
+				immediate="true"></p:commandButton>
+			</div>
+		
+		</h:form>
+	
+	</ui:define>
+	
+</ui:composition>
+</html>
