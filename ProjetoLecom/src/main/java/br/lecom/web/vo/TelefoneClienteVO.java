@@ -26,7 +26,7 @@ public class TelefoneClienteVO extends GenericoVO{
 	@SequenceGenerator(name="sqTelefoneCliente", sequenceName="sq_telefone_cliente", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sqTelefoneCliente")
 	@Column(name="id_telefone_cliente")
-	private Double idTelefoneCliente;
+	private Long idTelefoneCliente;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_cliente", referencedColumnName="id_cliente")
@@ -49,11 +49,11 @@ public class TelefoneClienteVO extends GenericoVO{
 	
 	
 
-	public Double getIdTelefoneCliente() {
+	public Long getIdTelefoneCliente() {
 		return idTelefoneCliente;
 	}
 
-	public void setIdTelefoneCliente(Double idTelefoneCliente) {
+	public void setIdTelefoneCliente(Long idTelefoneCliente) {
 		this.idTelefoneCliente = idTelefoneCliente;
 	}
 

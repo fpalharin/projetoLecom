@@ -10,7 +10,7 @@ import br.lecom.web.dao.service.IEstadoDAO;
 import br.lecom.web.vo.EstadoVO;
 
 @RequestScoped
-public class EstadoDAOImpl extends EntityDAOImpl<EstadoVO, Double> implements IEstadoDAO{
+public class EstadoDAOImpl extends EntityDAOImpl<EstadoVO, Long> implements IEstadoDAO{
 	
 	@PersistenceContext(unitName="ProjetoLecom")
 	private EntityManager em;

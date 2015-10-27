@@ -27,7 +27,7 @@ public class EnderecoClienteVO extends GenericoVO {
 	@SequenceGenerator(name="sqEnderecoCliente", sequenceName="sq_endereco_cliente", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sqEnderecoCliente")
 	@Column(name="id_endereco_cliente")
-	private Double idEnderecoCliente;
+	private Long idEnderecoCliente;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_cidade", referencedColumnName="id_cidade")
@@ -54,11 +54,11 @@ public class EnderecoClienteVO extends GenericoVO {
 
 	}
 
-	public Double getIdEnderecoCliente() {
+	public Long getIdEnderecoCliente() {
 		return idEnderecoCliente;
 	}
 
-	public void setIdEnderecoCliente(Double idEnderecoCliente) {
+	public void setIdEnderecoCliente(Long idEnderecoCliente) {
 		this.idEnderecoCliente = idEnderecoCliente;
 	}
 

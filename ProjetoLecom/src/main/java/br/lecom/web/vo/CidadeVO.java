@@ -29,7 +29,7 @@ public class CidadeVO extends GenericoVO{
 	@SequenceGenerator(name="sqCidade", sequenceName="sq_cidade", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sqCidade")
 	@Column(name="id_cidade")
-	private Double idCidade;
+	private Long idCidade;
 	
 	@Column(name="nome_cidade")
 	private String nomeCidade;
@@ -42,11 +42,11 @@ public class CidadeVO extends GenericoVO{
 		
 	}
 
-	public Double getIdCidade() {
+	public Long getIdCidade() {
 		return idCidade;
 	}
 
-	public void setIdCidade(Double idCidade) {
+	public void setIdCidade(Long idCidade) {
 		this.idCidade = idCidade;
 	}
 

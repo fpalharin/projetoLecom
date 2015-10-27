@@ -16,7 +16,7 @@ import br.lecom.web.vo.ClienteServicoVO;
 import br.lecom.web.vo.ServicoEmpresaVO;
 
 @RequestScoped
-public class ServicoEmpresaDAOImpl extends EntityDAOImpl<ServicoEmpresaVO, Double> implements IServicoEmpresaDAO{
+public class ServicoEmpresaDAOImpl extends EntityDAOImpl<ServicoEmpresaVO, Long> implements IServicoEmpresaDAO{
 
 	@PersistenceContext(unitName="ProjetoLecom")
 	private EntityManager em;

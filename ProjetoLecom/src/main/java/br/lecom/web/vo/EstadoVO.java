@@ -22,7 +22,7 @@ public class EstadoVO extends GenericoVO{
 	@SequenceGenerator(name="sqEstado", sequenceName="sq_estado", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sqEstado")
 	@Column(name="id_estado")
-	private Double idEstado;
+	private Long idEstado;
 	
 	@Column(name="nome_estado")
 	private String nomeEstado;
@@ -40,12 +40,12 @@ public class EstadoVO extends GenericoVO{
 	}
 
 
-	public Double getIdEstado() {
+	public Long getIdEstado() {
 		return idEstado;
 	}
 
 
-	public void setIdEstado(Double idEstado) {
+	public void setIdEstado(Long idEstado) {
 		this.idEstado = idEstado;
 	}
 

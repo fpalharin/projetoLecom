@@ -69,10 +69,10 @@ public class ClienteBean implements Serializable{
 	@Size(max=20, message="O campo é obrigatório")
 	private String tipoTelefone;
 	
-	private Double codEstadoInc;
+	private Long codEstadoInc;
 	private List<SelectItem> listaEstadosInc;
 	
-	private Double codCidadeInc;
+	private Long codCidadeInc;
 	private List<SelectItem> listaCidadesInc;
 	
 	@EmptyField
@@ -175,11 +175,11 @@ public class ClienteBean implements Serializable{
 	@Cep
 	private String cepClienteAlt;
 	
-	private Double codEstadoAlt;
+	private Long codEstadoAlt;
 	private List<SelectItem> listaEstadosAlt;
 	
 	@EmptyComboBox
-	private Double codCidadeAlt;
+	private Long codCidadeAlt;
 	private List<SelectItem> listaCidadesAlt;
 	
 	//Bindings dos campos de Alteração de Endereço
@@ -210,9 +210,9 @@ public class ClienteBean implements Serializable{
 	private String bairroClienteAux;
 	private String complementoClienteAux;
 	private String cepClienteAux;
-	private Double codEstadoAux;
+	private Long codEstadoAux;
 	private List<SelectItem> listaEstadosAux;
-	private Double codCidadeAux;
+	private Long codCidadeAux;
 	private List<SelectItem> listaCidadesAux;
 	private HtmlSelectOneMenu campoCidadeAux;
 	
@@ -224,7 +224,7 @@ public class ClienteBean implements Serializable{
 	private String telefoneClienteAux;
 	private String tipoTelefoneAux;
 	
-	private Double idClienteAlt;
+	private Long idClienteAlt;
 	
 	@Inject
 	private ClienteBO bo;
@@ -241,7 +241,7 @@ public class ClienteBean implements Serializable{
 			if(si.getValue().equals(codEstadoAux)){
 				
 				estado = new EstadoVO();
-				estado.setIdEstado((Double) si.getValue());
+				estado.setIdEstado((Long) si.getValue());
 				estado.setNomeEstado(si.getLabel());
 			}
 		}
@@ -251,7 +251,7 @@ public class ClienteBean implements Serializable{
 			if(si.getValue().equals(codCidadeAux)){
 				
 				cidade = new CidadeVO();
-				cidade.setIdCidade((Double) si.getValue());
+				cidade.setIdCidade((Long) si.getValue());
 				cidade.setNomeCidade(si.getLabel());
 			}
 		}
@@ -272,8 +272,8 @@ public class ClienteBean implements Serializable{
 		cepClienteAux = null;
 		complementoClienteAux = null;
 		logradouroClienteAux = null;
-		codEstadoAux = 0d;
-		codCidadeAux = 0d;
+		codEstadoAux = 0l;
+		codCidadeAux = 0l;
 		
 	}
 	
@@ -325,7 +325,7 @@ public class ClienteBean implements Serializable{
 	public void buscarCidadePorEstado(AjaxBehaviorEvent evento){
 		
 		UIInput comboEstado = (UIInput) evento.getComponent();
-		Double codEstado = (Double) comboEstado.getValue();
+		Long codEstado = (Long) comboEstado.getValue();
 		
 		listaCidadesInc = new ArrayList<SelectItem>();
 		
@@ -346,7 +346,7 @@ public class ClienteBean implements Serializable{
 	public void buscarCidadePorEstadoAux(AjaxBehaviorEvent evento){
 		
 		UIInput comboEstado = (UIInput) evento.getComponent();
-		Double codEstado = (Double) comboEstado.getValue();
+		Long codEstado = (Long) comboEstado.getValue();
 		
 		listaCidadesAux = new ArrayList<SelectItem>();
 		
@@ -366,7 +366,7 @@ public class ClienteBean implements Serializable{
 	public void buscarCidadePorEstadoAlt(AjaxBehaviorEvent evento){
 		
 		UIInput comboEstado = (UIInput) evento.getComponent();
-		Double codEstado = (Double) comboEstado.getValue();
+		Long codEstado = (Long) comboEstado.getValue();
 		
 		listaCidadesAlt = new ArrayList<SelectItem>();
 		
@@ -387,7 +387,7 @@ public class ClienteBean implements Serializable{
 	@PostConstruct
 	public void incializarTela() throws IOException{
 		
-		codCidadeInc = 0D;
+		codCidadeInc = 0L;
 		String action = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(UtilFuncoes.PARAM_ENTRADA);
 		
 		if(action != null){
@@ -408,7 +408,7 @@ public class ClienteBean implements Serializable{
 			else if(action.trim().equals(TipoAcesso.ALTERAR.getAcesso())){
 				
 				String idClienteTexto = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCliente");
-				idClienteAlt = Double.parseDouble(idClienteTexto);
+				idClienteAlt = Long.parseLong(idClienteTexto);
 				
 				listaDialogEndereco = bo.consultarEnderecoClientePorIdCliente(idClienteAlt);
 				listaDialogTelefone = bo.consultarTelefoneClientePorIdCliente(idClienteAlt);
@@ -442,7 +442,7 @@ public class ClienteBean implements Serializable{
 			else if(action.trim().equals(TipoAcesso.ALTERAR_ENDERECO.getAcesso())){
 				
 				String idEnderecoTexto = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idEndereco");
-				Double idEndereco = Double.parseDouble(idEnderecoTexto);
+				Long idEndereco = Long.parseLong(idEnderecoTexto);
 				
 				enderecoSelecionadoAlt = bo.consultarEnderecoClientePorId(idEndereco);
 				logradouroClienteAlt = enderecoSelecionadoAlt.getLogradouroCliente();
@@ -473,7 +473,7 @@ public class ClienteBean implements Serializable{
 			else if(action.trim().equals(TipoAcesso.ALTERAR_TELEFONE.getAcesso())){
 				
 				String idTelefoneTexto = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idTelefone");
-				Double idTelefone = Double.parseDouble(idTelefoneTexto);
+				Long idTelefone = Long.parseLong(idTelefoneTexto);
 				
 				telefoneSelecionadoAlt = bo.consultarTelefoneClientePorId(idTelefone);
 				dddClienteAlt = telefoneSelecionadoAlt.getDddCliente();
@@ -702,6 +702,7 @@ public class ClienteBean implements Serializable{
 			endereco.setComplementoCliente(complementoClienteInc);
 			endereco.setCidade(new CidadeVO());
 			endereco.getCidade().setIdCidade(codCidadeInc);
+			endereco.setCliente(cliente);
 			
 			listaEnderecos.add(endereco);
 			
@@ -785,11 +786,11 @@ public class ClienteBean implements Serializable{
 		this.tipoTelefone = tipoTelefone;
 	}
 
-	public Double getCodEstadoInc() {
+	public Long getCodEstadoInc() {
 		return codEstadoInc;
 	}
 
-	public void setCodEstadoInc(Double codEstadoInc) {
+	public void setCodEstadoInc(Long codEstadoInc) {
 		this.codEstadoInc = codEstadoInc;
 	}
 
@@ -801,11 +802,11 @@ public class ClienteBean implements Serializable{
 		this.listaEstadosInc = listaEstadosInc;
 	}
 
-	public Double getCodCidadeInc() {
+	public Long getCodCidadeInc() {
 		return codCidadeInc;
 	}
 
-	public void setCodCidadeInc(Double codCidadeInc) {
+	public void setCodCidadeInc(Long codCidadeInc) {
 		this.codCidadeInc = codCidadeInc;
 	}
 
@@ -1154,11 +1155,11 @@ public class ClienteBean implements Serializable{
 		this.cepClienteAlt = cepClienteAlt;
 	}
 
-	public Double getCodEstadoAlt() {
+	public Long getCodEstadoAlt() {
 		return codEstadoAlt;
 	}
 
-	public void setCodEstadoAlt(Double codEstadoAlt) {
+	public void setCodEstadoAlt(Long codEstadoAlt) {
 		this.codEstadoAlt = codEstadoAlt;
 	}
 
@@ -1170,11 +1171,11 @@ public class ClienteBean implements Serializable{
 		this.listaEstadosAlt = listaEstadosAlt;
 	}
 
-	public Double getCodCidadeAlt() {
+	public Long getCodCidadeAlt() {
 		return codCidadeAlt;
 	}
 
-	public void setCodCidadeAlt(Double codCidadeAlt) {
+	public void setCodCidadeAlt(Long codCidadeAlt) {
 		this.codCidadeAlt = codCidadeAlt;
 	}
 
@@ -1355,11 +1356,11 @@ public class ClienteBean implements Serializable{
 		this.cepClienteAux = cepClienteAux;
 	}
 
-	public Double getCodEstadoAux() {
+	public Long getCodEstadoAux() {
 		return codEstadoAux;
 	}
 
-	public void setCodEstadoAux(Double codEstadoAux) {
+	public void setCodEstadoAux(Long codEstadoAux) {
 		this.codEstadoAux = codEstadoAux;
 	}
 
@@ -1371,11 +1372,11 @@ public class ClienteBean implements Serializable{
 		this.listaEstadosAux = listaEstadosAux;
 	}
 
-	public Double getCodCidadeAux() {
+	public Long getCodCidadeAux() {
 		return codCidadeAux;
 	}
 
-	public void setCodCidadeAux(Double codCidadeAux) {
+	public void setCodCidadeAux(Long codCidadeAux) {
 		this.codCidadeAux = codCidadeAux;
 	}
 
@@ -1443,11 +1444,11 @@ public class ClienteBean implements Serializable{
 		this.tipoTelefoneAux = tipoTelefoneAux;
 	}
 
-	public Double getIdClienteAlt() {
+	public Long getIdClienteAlt() {
 		return idClienteAlt;
 	}
 
-	public void setIdClienteAlt(Double idClienteAlt) {
+	public void setIdClienteAlt(Long idClienteAlt) {
 		this.idClienteAlt = idClienteAlt;
 	}
 

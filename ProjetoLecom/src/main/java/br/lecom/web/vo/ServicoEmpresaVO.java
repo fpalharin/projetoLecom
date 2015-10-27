@@ -24,7 +24,7 @@ public class ServicoEmpresaVO extends GenericoVO{
 	@SequenceGenerator(name="sqServicoEmpresa", sequenceName="sq_servico_empresa", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sqServicoEmpresa")
 	@Column(name="id_servico_empresa")
-	private Double idServicoEmpresa;
+	private Long idServicoEmpresa;
 	
 	@Column(name="nome_servico")
 	private String nomeServico;
@@ -46,11 +46,11 @@ public class ServicoEmpresaVO extends GenericoVO{
 		
 	}
 
-	public Double getIdServicoEmpresa() {
+	public Long getIdServicoEmpresa() {
 		return idServicoEmpresa;
 	}
 
-	public void setIdServicoEmpresa(Double idServicoEmpresa) {
+	public void setIdServicoEmpresa(Long idServicoEmpresa) {
 		this.idServicoEmpresa = idServicoEmpresa;
 	}
 

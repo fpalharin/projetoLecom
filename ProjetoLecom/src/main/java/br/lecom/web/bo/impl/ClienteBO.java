@@ -23,7 +23,7 @@ import br.lecom.web.dao.service.IEstadoDAO;
 
 
 
-public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serializable{
+public class ClienteBO extends EntityBOImpl<ClienteVO, Long> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -90,7 +90,7 @@ public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serial
 		return cliente;
 	}
 	
-	public ClienteVO detalharCliente(Double idCliente){
+	public ClienteVO detalharCliente(Long idCliente){
 		
 		ClienteVO cliente = null;
 		
@@ -155,7 +155,7 @@ public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serial
 		return true;
 	}
 	
-	public List<EnderecoClienteVO> consultarEnderecoClientePorIdCliente(Double idCliente){
+	public List<EnderecoClienteVO> consultarEnderecoClientePorIdCliente(Long idCliente){
 		
 		List<EnderecoClienteVO> listaEnderecos = null;
 		
@@ -172,7 +172,7 @@ public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serial
 		return listaEnderecos;
 	}
 	
-	public List<TelefoneClienteVO> consultarTelefoneClientePorIdCliente(Double idCliente){
+	public List<TelefoneClienteVO> consultarTelefoneClientePorIdCliente(Long idCliente){
 		
 		List<TelefoneClienteVO> listaTelefones = null;
 		
@@ -189,7 +189,7 @@ public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serial
 		return listaTelefones;
 	}
 	
-	public EnderecoClienteVO consultarEnderecoClientePorId(Double idEndereco){
+	public EnderecoClienteVO consultarEnderecoClientePorId(Long idEndereco){
 		
 		EnderecoClienteVO enderecoCliente = null;
 		
@@ -206,7 +206,7 @@ public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serial
 		return enderecoCliente;
 	}
 	
-	public TelefoneClienteVO consultarTelefoneClientePorId(Double idTelefone){
+	public TelefoneClienteVO consultarTelefoneClientePorId(Long idTelefone){
 		
 		TelefoneClienteVO telefoneCliente = null;
 		
@@ -287,7 +287,7 @@ public class ClienteBO extends EntityBOImpl<ClienteVO, Double> implements Serial
 	}
 	
 	
-	public List<CidadeVO> consultarCidadePorEstado(Double idEstado){
+	public List<CidadeVO> consultarCidadePorEstado(Long idEstado){
 		
 		List<CidadeVO> listaCidades = null;
 		

@@ -140,9 +140,9 @@ Cliente.prototype.validarFormularioEnderecoAlt = function(){
 	
 	try{
 		
-		var logradouroCliente = $("#formularioAlterarEndereco\\:logradouroClinica");
-		var bairroCliente = $("#formularioAlterarEndereco\\:bairroClinica");
-		var cepCliente = $("#formularioAlterarEndereco\\:cepClinica");
+		var logradouroCliente = $("#formularioAlterarEndereco\\:logradouroCliente");
+		var bairroCliente = $("#formularioAlterarEndereco\\:bairroCliente");
+		var cepCliente = $("#formularioAlterarEndereco\\:cepCliente");
 		var comboEstado = $("#formularioAlterarEndereco\\:comboEstado");
 		var comboCidade = $("#formularioAlterarEndereco\\:comboCidade");
 		
@@ -217,9 +217,7 @@ Cliente.prototype.validarFormulario = function(){
 	var erroLogradouro = '';
 	var erroBairro = '';
 	var erroDdd = '';
-	var erroDddTamanho = '';
 	var erroTelefone = '';
-	var erroTelefoneTamanho = '';
 	var erroTipoTelefone = '';
 
 	

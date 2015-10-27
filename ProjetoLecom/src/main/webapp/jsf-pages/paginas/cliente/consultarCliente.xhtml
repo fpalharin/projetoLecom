@@ -95,7 +95,7 @@
 					</div> 
 					
 					<div>
-						<p:dataTable value="#{clente.listaEnderecosCon}" var="endereco" paginator="true" rows="10"
+						<p:dataTable value="#{cliente.listaEnderecosCon}" var="endereco" paginator="true" rows="10"
 						emptyMessage="Não há Registro" id="enderecoTable">
 							<p:column headerText="Rua">
 								<h:outputText value="#{endereco.logradouroCliente}" />
@@ -120,7 +120,7 @@
 							</p:column>
 							
 							<p:column>
-								<p:commandButton action="#{clinica.receberIdEndereco(endereco)}" 
+								<p:commandButton action="#{cliente.receberIdEndereco(endereco)}" 
 								value="Excluir" oncomplete="PF('dialogConfirmacaoEndereco').show()"></p:commandButton>
 							</p:column>
 						</p:dataTable>
@@ -135,7 +135,7 @@
 			<h:form id="formularioConsulta">
 		 
 		 		<h:outputLabel value="Nome: " for="nomeClientePequisa" />
-				<h:inputText value="#{cliente.nomeClienteCon}" id="nomeClinicaPequisa" label="Nome da Clinica"/>
+				<h:inputText value="#{cliente.nomeClienteCon}" id="nomeClientePequisa" label="Nome da Cliente"/>
 				
 				<h:commandButton value="Pesquisar" action="#{cliente.pesquisarCliente}" />
 				

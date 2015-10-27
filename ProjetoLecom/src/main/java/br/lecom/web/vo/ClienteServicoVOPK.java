@@ -7,9 +7,9 @@ public class ClienteServicoVOPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Double cliente;
+	private Long cliente;
 	
-	private Double servico;
+	private Long servico;
 	
 	@Override
 	public boolean equals(Object objeto) {
@@ -29,19 +29,19 @@ public class ClienteServicoVOPK implements Serializable {
 		return cliente.hashCode() + servico.hashCode();
 	}
 
-	public Double getCliente() {
+	public Long getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Double cliente) {
+	public void setCliente(Long cliente) {
 		this.cliente = cliente;
 	}
 
-	public Double getServico() {
+	public Long getServico() {
 		return servico;
 	}
 
-	public void setServico(Double servico) {
+	public void setServico(Long servico) {
 		this.servico = servico;
 	}
 

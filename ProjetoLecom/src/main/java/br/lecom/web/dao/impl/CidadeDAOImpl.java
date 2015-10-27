@@ -18,7 +18,7 @@ import br.lecom.web.anotacoes.ConnectionQualifier;
 import br.lecom.web.enumeradores.TipoConexao;
 
 @RequestScoped
-public class CidadeDAOImpl extends EntityDAOImpl<CidadeVO, Double> implements ICidadeDAO{
+public class CidadeDAOImpl extends EntityDAOImpl<CidadeVO, Long> implements ICidadeDAO{
 
 
 
@@ -53,7 +53,7 @@ public class CidadeDAOImpl extends EntityDAOImpl<CidadeVO, Double> implements IC
 
 
 	@Override
-	public List<CidadeVO> consultarCidadePorEstado(Double idEstado) throws Exception{
+	public List<CidadeVO> consultarCidadePorEstado(Long idEstado) throws Exception{
 		
 		List<CidadeVO> listaCidades = null;
 		

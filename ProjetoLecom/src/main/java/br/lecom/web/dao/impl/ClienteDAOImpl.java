@@ -20,7 +20,9 @@ import br.lecom.web.vo.EnderecoClienteVO;
 import br.lecom.web.vo.ServicoEmpresaVO;
 import br.lecom.web.vo.TelefoneClienteVO;
 
-public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements IClienteDAO{
+
+
+public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Long> implements IClienteDAO{
 
 	@PersistenceContext(unitName="ProjetoLecom")
 	private EntityManager em;
@@ -66,7 +68,7 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	}
 
 	@Override
-	public ClienteVO detalharCliente(Double idCliente) throws Exception {
+	public ClienteVO detalharCliente(Long idCliente) throws Exception {
 		
 		ClienteVO cliente = new ClienteVO();
 		
@@ -88,10 +90,66 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	public void alterar(ClienteVO cliente) throws Exception {
 		userTransaction.begin();
 		
-			em.merge(cliente);
+		List<EnderecoClienteVO> listaEnderecoAuxInc = cliente.getListaEnderecoAuxInc();
+		List<EnderecoClienteVO> listaEnderecoAuxExc = cliente.getListaEnderecoAuxExc();
+		List<TelefoneClienteVO> listaTelefoneAuxInc = cliente.getListaTelefoneAuxInc();
+		List<TelefoneClienteVO> listaTelefoneAuxExc = cliente.getListaTelefoneAuxExc();
+		
+		em.merge(cliente);
+		
+		excluirEnderecoAux(listaEnderecoAuxExc);
+		incluirEnderecoAux(listaEnderecoAuxInc);
+		excluirTelefoneAux(listaTelefoneAuxExc);
+		incluirTelefoneAux(listaTelefoneAuxInc);
 		
 		userTransaction.commit();
 
+	}
+	
+	private void excluirEnderecoAux(List<EnderecoClienteVO> listaEnderecos) throws Exception{
+		
+		for (EnderecoClienteVO enderecoCliente : listaEnderecos) {
+			
+			if(enderecoCliente.getIdEnderecoCliente() != null){
+				
+				EnderecoClienteVO enderecoExclusao = em.find(EnderecoClienteVO.class, enderecoCliente.getIdEnderecoCliente());
+				
+				em.remove(enderecoExclusao);
+			}
+		}
+	}
+	
+	private void incluirEnderecoAux(List<EnderecoClienteVO> listaEnderecos) throws Exception{
+		if(listaEnderecos != null){
+			
+			for (EnderecoClienteVO enderecoCliente : listaEnderecos) {
+				
+				em.persist(enderecoCliente);
+			}
+		}	
+	}
+	
+	private void excluirTelefoneAux(List<TelefoneClienteVO> listaTelefones) throws Exception{
+		
+		for (TelefoneClienteVO telefoneCliente : listaTelefones) {
+			
+			if(telefoneCliente.getIdTelefoneCliente() != null){
+				
+				TelefoneClienteVO telefoneExclusao = em.find(TelefoneClienteVO.class, telefoneCliente.getIdTelefoneCliente());
+				
+				em.remove(telefoneExclusao);
+			}
+		}
+	}
+	
+	private void incluirTelefoneAux(List<TelefoneClienteVO> listaTelefones) throws Exception{
+		if(listaTelefones != null){
+			
+			for (TelefoneClienteVO telefoneCliente : listaTelefones) {
+				
+				em.persist(telefoneCliente);
+			}
+		}	
 	}
 
 	@Override
@@ -120,7 +178,7 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	}
 
 	@Override
-	public List<EnderecoClienteVO> consultarEnderecoClientePorIdCliente(Double idCliente) throws Exception {
+	public List<EnderecoClienteVO> consultarEnderecoClientePorIdCliente(Long idCliente) throws Exception {
 		
 		List<EnderecoClienteVO> listaEnderecos = null;
 		
@@ -145,7 +203,7 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	}
 
 	@Override
-	public List<TelefoneClienteVO> consultarTelefoneClientePorIdCliente(Double idCliente) throws Exception {
+	public List<TelefoneClienteVO> consultarTelefoneClientePorIdCliente(Long idCliente) throws Exception {
 		
 		List<TelefoneClienteVO> listaTelefones = null;
 		
@@ -171,7 +229,7 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	}
 
 	@Override
-	public TelefoneClienteVO consultarTelefoneClientePorId(Double idTelefone)throws Exception {
+	public TelefoneClienteVO consultarTelefoneClientePorId(Long idTelefone)throws Exception {
 		
 		TelefoneClienteVO telefone = null;
 		
@@ -196,7 +254,7 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	}
 
 	@Override
-	public EnderecoClienteVO consultarEnderecoClientePorId(Double idEndereco)throws Exception {
+	public EnderecoClienteVO consultarEnderecoClientePorId(Long idEndereco)throws Exception {
 		
 		EnderecoClienteVO endereco = null;
 		
@@ -225,7 +283,9 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 		
 		userTransaction.begin();
 			
-			em.remove(cliente);
+			ClienteVO clinicaExclusao = em.find(ClienteVO.class, cliente.getIdCliente());
+			
+			em.remove(clinicaExclusao);
 		
 		userTransaction.commit();
 		
@@ -236,8 +296,10 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 	public boolean excluirEnderecoCliente(EnderecoClienteVO endereco)throws Exception {
 		
 		userTransaction.begin();
+		
+			EnderecoClienteVO enderecoExlcusao = em.find(EnderecoClienteVO.class, endereco.getIdEnderecoCliente());
 			
-			em.remove(endereco);
+			em.remove(enderecoExlcusao);
 		
 		userTransaction.commit();
 		
@@ -249,7 +311,9 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 		
 		userTransaction.begin();
 		
-			em.remove(telefone);
+			TelefoneClienteVO telefoneExclusao = em.find(TelefoneClienteVO.class, telefone.getIdTelefoneCliente());
+		
+			em.remove(telefoneExclusao);
 		
 		userTransaction.commit();
 		
@@ -281,7 +345,7 @@ public class ClienteDAOImpl extends EntityDAOImpl<ClienteVO, Double> implements 
 
 
 	@Override
-	public List<ClienteServicoVO> consultarServicosPorCliente(Double idCliente)throws Exception {
+	public List<ClienteServicoVO> consultarServicosPorCliente(Long idCliente)throws Exception {
 		
 			List<ClienteServicoVO> listaClienteServico = null;
 			

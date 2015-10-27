@@ -32,7 +32,7 @@ public class ClienteVO extends GenericoVO{
 	@SequenceGenerator(name="sqCliente", sequenceName="sq_cliente", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sqCliente")
 	@Column(name="id_cliente")
-	private Double idCliente;
+	private Long idCliente;
 	
 	
 	@Column(name="nome_cliente")
@@ -56,7 +56,7 @@ public class ClienteVO extends GenericoVO{
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<TelefoneClienteVO> listaTelefones;
 	
-	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.REMOVE})
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY)
 	private List<ClienteServicoVO> listaClienteServicos;
 	
 	@Transient
@@ -78,11 +78,11 @@ public class ClienteVO extends GenericoVO{
 		
 	}
 
-	public Double getIdCliente() {
+	public Long getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(Double idCliente) {
+	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
 	}
 

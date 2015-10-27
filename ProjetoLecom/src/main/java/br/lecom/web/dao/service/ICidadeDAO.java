@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.lecom.web.vo.CidadeVO;
 
-public interface ICidadeDAO extends IEntityDAO<CidadeVO, Double>{
+public interface ICidadeDAO extends IEntityDAO<CidadeVO, Long>{
 	
-	List<CidadeVO> consultarCidadePorEstado(Double idEstado) throws Exception;
+	List<CidadeVO> consultarCidadePorEstado(Long idEstado) throws Exception;
 }
